@@ -1,0 +1,5 @@
+create database ccde
+use ccde
+
+create user corrently with password 'casa' with all privileges
+grant all privileges on ccde to corrently
