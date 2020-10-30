@@ -24,6 +24,15 @@ module.exports = function(config,env) {
         if(typeof json.timeStamp !== 'number') {
           json.timeStamp = new Date().getTime();
         }
+        if(Array.isArray(config.meterIds)) {
+          let allowed=false;
+          for(let i=0;i<config.meterIds.length;i++) {
+            if(config.meterIds[i] == json.meterId) allowed=true;
+          }
+          if(!allowed) {
+            return { 'err': 'forbidden' };
+          }
+        }
         try {
         if(influx == null) {
             await _initInflux();
