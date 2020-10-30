@@ -1,9 +1,4 @@
 {
   "module": "casa-corrently-data-edge",
-  "influxdb_host": "127.0.0.1",
-  "influxdb_port": 8086,
-  "influxdb_database": "ccde",
-  "influxdb_username": "corrently",
-  "influxdb_password": "casa",
   "wwwroot": "/reading"
 }

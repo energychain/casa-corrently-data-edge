@@ -4,15 +4,24 @@ module.exports = function(config,env) {
       let influx = null;
 
       const _initInflux = async function() {
-        influx = new Influx.InfluxDB({
-              host: config.influxdb_host,
-              port: config.influxdb_port,
-              database: config.influxdb_database,
-              username: config.influxdb_username,
-              password: config.influxdb_password
-        });
         try {
-          influx.createDatabase(config.influxdb_database)
+          if(typeof  config.influxdb_database !== 'undefined') {
+            influx = new Influx.InfluxDB({
+                  host: config.influxdb_host,
+                  port: config.influxdb_port,
+                  database: config.influxdb_database,
+                  username: config.influxdb_username,
+                  password: config.influxdb_password
+            });
+          } else {
+            // check with Defaults
+            influx = new Influx.InfluxDB();
+          }
+        } catch(e) {
+
+        }
+        try {
+          await influx.createDatabase(config.influxdb_database)
         } catch(e) {
           // in case already exists
         }
