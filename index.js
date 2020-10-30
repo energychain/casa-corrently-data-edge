@@ -15,7 +15,9 @@ module.exports = function(config,env) {
             });
           } else {
             // check with Defaults
-            influx = new Influx.InfluxDB();
+            influx = new Influx.InfluxDB({
+              database:'ccde'
+            });
           }
         } catch(e) {
 
