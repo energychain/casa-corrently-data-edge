@@ -1,1 +1,6 @@
 cmd: git add -A ; git commit -m "Auto Commit" -a ; git push origin master ; npm publish
+targets:
+  docker-build-push:
+    cmd: "docker build -t stromdao/casa-corrently-data-edge .;docker push stromdao/casa-corrently-data-edge"
+  docker-run:
+    cmd: "docker run --name casa-corrently-data-edge --net='host' -d -p 8081:3000 stromdao/casa-corrently-data-edge"

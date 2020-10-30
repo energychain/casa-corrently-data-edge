@@ -1,32 +1,10 @@
 {
-  "name": "casa-corrently-data-edge",
-  "version": "1.0.2",
-  "description": "Edge based archive/data storage for Casa Corrently",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/energychain/casa-corrently-data-edge.git"
-  },
-  "keywords": [
-    "stromdao",
-    "corrently",
-    "influxdb",
-    "edge"
-  ],
-  "author": "STROMDAO GmbH <kontakt@stromdao.com>",
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/energychain/casa-corrently-data-edge/issues"
-  },
-  "homepage": "https://github.com/energychain/casa-corrently-data-edge#readme",
+  "name": "casa-corrently-local",
+  "private": true,
+  "version": "0.0.1",
   "dependencies": {
-    "influx": "^5.6.3"
-  },
-  "funding": {
-    "type": "corporation",
-    "url": "https://www.stromdao.de/crowdfunding/info"
-  },
+    "casa-corrently": "*",
+    "casa-corrently-ipfs-edge": "*",
+    "casa-corrently-openems": "*"
+  }
 }

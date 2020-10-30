@@ -11,6 +11,11 @@ module.exports = function(config,env) {
               username: config.influxdb_username,
               password: config.influxdb_password
         });
+        try {
+          influx.createDatabase(config.influxdb_database)
+        } catch(e) {
+          // in case already exists
+        }
         return;
       }
 
