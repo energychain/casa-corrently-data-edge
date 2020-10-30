@@ -1,6 +1,8 @@
 #!/bin/sh
 
 nohup influxd run &
-curl -XPOST 'http://localhost:8086/query' --data-urlencode 'q=CREATE DATABASE "ccde"'
+echo "Wait for Influxd"
+sleep 20
+influx -database ccde -execute 'CREATE DATABASE ccde'
 pm2 start casa-corrently-container
 pm2 logs
