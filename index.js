@@ -1,5 +1,6 @@
 module.exports = function(config,env) {
       const Influx = require('influx');
+      let meterIds = {};
 
       let influx = null;
 
@@ -30,6 +31,13 @@ module.exports = function(config,env) {
         return;
       }
 
+      const getLast = async function(meterId) {
+        if(influx == null) {
+            await _initInflux();
+        }
+        return await influx.query('SELECT last("reading") as reading FROM "'+meterId+'"');
+      }
+
       const archive = async function(json) {
         if(typeof json.meterId == 'undefined') {
           return { 'err': 'meterId missing' };
@@ -55,13 +63,15 @@ module.exports = function(config,env) {
         }
         for(let i = 0; i< json.readings.length;i++) {
           if(typeof json.readings[i].timeStamp == 'undefined') json.readings[i].timeStamp = new Date().getTime();
-
+          fields = { reading: json.readings[i].reading,time:json.readings[i].timeStamp};
           influx.writePoints([
                 {
                   measurement: json.meterId,
-                  fields: { reading: json.readings[i].reading,time:json.readings[i].timeStamp}
+                  fields: fields
                 }
           ]);
+          meterIds[json.meterId] = fields;
+          env.ccde = meterIds;
         }
         } catch(e) {
             return { 'err': e.message};
@@ -100,6 +110,11 @@ module.exports = function(config,env) {
               status = await archive(json);
             }
             res.send(status);
+        });
+        env.app.get(wwwroot + '/last',async function (req, res) {
+          let last = {};
+          last = await getLast(req.query.meterId);
+          res.send(last);
         });
       }
       addHandlers();

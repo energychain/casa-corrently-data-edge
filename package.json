@@ -1,6 +1,6 @@
 {
   "name": "casa-corrently-data-edge",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Edge based archive/data storage for Casa Corrently",
   "main": "index.js",
   "scripts": {
