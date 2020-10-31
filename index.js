@@ -119,6 +119,10 @@ module.exports = function(config,env) {
         env.app.get(wwwroot + '/meterIds',async function (req, res) {
           res.send(meterIds);
         });
+        env.app.post(wwwroot + '/config',async function (req, res) {
+          console.log(req.body);
+          res.send({});
+        });
       }
       addHandlers();
 }
