@@ -116,6 +116,9 @@ module.exports = function(config,env) {
           last = await getLast(req.query.meterId);
           res.send(last);
         });
+        env.app.get(wwwroot + '/meterIds',async function (req, res) {
+          res.send(meterIds);
+        });
       }
       addHandlers();
 }
