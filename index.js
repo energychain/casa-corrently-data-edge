@@ -126,6 +126,8 @@ module.exports = function(config,env) {
              "name":"Corrently Demozähler",
              "meterId":"influx-feedin",
              "isProduction":false,
+             "prodMeterId":"influx-prod",
+             "scaleFactor": 10000000,
              "revenue":0,
              "amortization":0,
              "source":"casa-corrently-influxdb-source",
