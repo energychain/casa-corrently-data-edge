@@ -135,7 +135,7 @@ module.exports = function(config,env) {
              "influxport": 8086,
              "influx_feedin_measurement": "",
              "influx_feedout_measurement": "",
-             "influx_prod_measurement": ""
+             "influx_prod_measurement": "",
              "influx_feedin_field": "reading",
              "influx_feedout_field": "reading",
              "influx_prod_field": "reading"
