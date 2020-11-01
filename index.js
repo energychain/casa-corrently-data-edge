@@ -1,5 +1,6 @@
 module.exports = function(config,env) {
       const Influx = require('influx');
+      const fs = require('fs');
       let meterIds = {};
 
       let influx = null;
@@ -120,7 +121,46 @@ module.exports = function(config,env) {
           res.send(meterIds);
         });
         env.app.post(wwwroot + '/config',async function (req, res) {
-          console.log(req.body);
+          let conf = {
+             "type":"InfluxDB Measurement Meter",
+             "name":"Corrently Demozähler",
+             "meterId":"influx-feedin",
+             "isProduction":false,
+             "revenue":0,
+             "amortization":0,
+             "source":"casa-corrently-influxdb-source",
+             "community":"data-edge",
+             "influxhost": "localhost",
+             "influxdb": "ccde",
+             "influxport": 8086,
+             "influx_feedin_measurement": "",
+             "influx_feedout_measurement": "",
+             "influx_prod_measurement": ""
+             "influx_feedin_field": "reading",
+             "influx_feedout_field": "reading",
+             "influx_prod_field": "reading"
+          };
+          conf.uuid = 'ccde_'+Math.round(Math.random()*1000000)+'_'+Math.round(Math.random()*1000000)
+          conf.name = req.body.name;
+          conf.stromkonto = req.body.stromkonto;
+          conf.zip = req.body.zip;
+          conf.depot = req.body.stromkonto;
+          conf.revenue = req.body.revenue.replace(',','.') * 1;
+          conf.amortization = req.body.amortization.replace(',','.') * 1;
+          for (const [key, value] of Object.entries(req.body)) {
+            if(key.substr(0,6) == 'meter_') {
+                if(value == 'energy') {
+                  conf.influx_feedin_measurement = key.substr(6);
+                }
+                if(value == 'energyOut') {
+                  conf.influx_feedout_measurement = key.substr(6);
+                }
+                if(value == 'prod') {
+                  conf.influx_prod_measurement = key.substr(6);
+                }
+            }
+          }
+          fs.writeFileSync(conf.uuid + ".json",JSON.stringify(conf));
           res.send({});
         });
       }
